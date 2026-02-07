@@ -1,19 +1,12 @@
 # ===============================
-# Railway Laravel + Vite Deploy
+# Railway Laravel Backend Deploy
 # ===============================
 
 [phases.setup]
 nixPkgs = [
-  # ✅ PHP
   "php81",
-
-  # ✅ Composer
   "php81Packages.composer",
 
-  # ✅ Node.js + npm (buat Vite/Tailwind)
-  "nodejs_18",
-
-  # ✅ PHP extensions wajib Laravel
   "php81Extensions.mbstring",
   "php81Extensions.bcmath",
   "php81Extensions.xml",
@@ -28,20 +21,16 @@ nixPkgs = [
 # ===============================
 [phases.build]
 cmds = [
-  # Install Laravel dependencies
   "composer install --no-dev --optimize-autoloader",
 
-  # Cache Laravel biar cepat
-  "php artisan config:cache",
-  "php artisan route:cache",
+  # Generate APP KEY kalau belum ada
+  "php artisan key:generate --force",
 
-  # Install frontend dependencies
-  "npm install",
+  # Clear cache biar fresh
+  "php artisan config:clear",
+  "php artisan cache:clear",
 
-  # Build Vite assets
-  "npm run build",
-
-  # Jalankan migration otomatis
+  # 🔥 MIGRATE OTOMATIS
   "php artisan migrate --force"
 ]
 
