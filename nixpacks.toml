@@ -13,7 +13,7 @@ nixPkgs = [
   # ✅ Node.js + npm (buat Vite/Tailwind)
   "nodejs_18",
 
-  # ✅ PHP extensions yang Laravel butuh
+  # ✅ PHP extensions wajib Laravel
   "php81Extensions.mbstring",
   "php81Extensions.bcmath",
   "php81Extensions.xml",
@@ -31,15 +31,22 @@ cmds = [
   # Install Laravel dependencies
   "composer install --no-dev --optimize-autoloader",
 
+  # Cache Laravel biar cepat
+  "php artisan config:cache",
+  "php artisan route:cache",
+
   # Install frontend dependencies
   "npm install",
 
   # Build Vite assets
-  "npm run build"
+  "npm run build",
+
+  # Jalankan migration otomatis
+  "php artisan migrate --force"
 ]
 
 # ===============================
 # START COMMAND
 # ===============================
 [start]
-cmd = "php -S 0.0.0.0:$PORT -t public"
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
