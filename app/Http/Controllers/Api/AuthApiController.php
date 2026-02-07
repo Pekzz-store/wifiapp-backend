@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Ticket;
+use App\Models\Pelanggan;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -40,18 +41,18 @@ class AuthApiController extends Controller
     // =========================
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
 
-        if (!auth()->attempt($credentials)) {
+        $user = User::where('username', $request->username)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'message' => 'Username atau password salah'
             ], 401);
         }
-
-        $user = auth()->user();
 
         $token = $user->createToken('mobile')->plainTextToken;
 
@@ -61,6 +62,7 @@ class AuthApiController extends Controller
             'user'  => $user,
         ]);
     }
+
     // =========================
     // LAPOR GANGGUAN   
     // =========================
