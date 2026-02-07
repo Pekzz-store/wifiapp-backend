@@ -1,17 +1,45 @@
+# ===============================
+# Railway Laravel + Vite Deploy
+# ===============================
+
 [phases.setup]
 nixPkgs = [
+  # ✅ PHP
   "php81",
+
+  # ✅ Composer
   "php81Packages.composer",
+
+  # ✅ Node.js + npm (buat Vite/Tailwind)
+  "nodejs_18",
+
+  # ✅ PHP extensions yang Laravel butuh
   "php81Extensions.mbstring",
   "php81Extensions.bcmath",
   "php81Extensions.xml",
-  "php81Extensions.curl"
+  "php81Extensions.curl",
+  "php81Extensions.openssl",
+  "php81Extensions.pdo",
+  "php81Extensions.pdo_mysql"
 ]
 
+# ===============================
+# BUILD PHASE
+# ===============================
 [phases.build]
 cmds = [
-  "composer install --no-dev --optimize-autoloader"
+  # Install Laravel dependencies
+  "composer install --no-dev --optimize-autoloader",
+
+  # Install frontend dependencies
+  "npm install",
+
+  # Build Vite assets
+  "npm run build"
 ]
 
+# ===============================
+# START COMMAND
+# ===============================
 [start]
 cmd = "php -S 0.0.0.0:$PORT -t public"
