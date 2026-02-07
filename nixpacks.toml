@@ -1,6 +1,12 @@
-# pakai PHP 8.1 dan composer
 [phases.setup]
-nixPkgs = ["php81", "composer"]
+nixPkgs = [
+  "php81",
+  "php81Packages.composer",
+  "php81Extensions.mbstring",
+  "php81Extensions.bcmath",
+  "php81Extensions.xml",
+  "php81Extensions.curl"
+]
 
 [phases.build]
 cmds = [
