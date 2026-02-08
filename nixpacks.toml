@@ -1,12 +1,11 @@
 # ===============================
-# Railway Laravel Backend Deploy
+# Railway Laravel Deploy Fix
 # ===============================
 
 [phases.setup]
 nixPkgs = [
   "php81",
   "php81Packages.composer",
-
   "php81Extensions.mbstring",
   "php81Extensions.bcmath",
   "php81Extensions.xml",
@@ -23,15 +22,15 @@ nixPkgs = [
 cmds = [
   "composer install --no-dev --optimize-autoloader",
 
-  # Generate APP KEY kalau belum ada
-  "php artisan key:generate --force",
-
-  # Clear cache biar fresh
+  # 🔥 INI WAJIB BROOO
   "php artisan config:clear",
   "php artisan cache:clear",
 
-  # 🔥 MIGRATE OTOMATIS
-  "php artisan migrate --force"
+  # 🔥 MIGRATE DATABASE
+  "php artisan migrate --force",
+
+  # Optional biar cepat
+  "php artisan config:cache"
 ]
 
 # ===============================
