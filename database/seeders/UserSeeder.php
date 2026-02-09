@@ -10,22 +10,22 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // ADMIN
-        User::create([
-            'username' => 'admin',
-            'name' => 'Administrator',
-            'email' => 'admin@wifiapp.test',
-            'password' => Hash::make('admin123'),
-            'role' => 'admin',
-        ]);
+        User::firstOrCreate(
+            ['username' => 'admin'],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('1234'),
+                'role' => 'admin'
+            ]
+        );
 
-        // TEKNISI
-        User::create([
-            'username' => 'teknisi',
-            'name' => 'Teknisi Lapangan',
-            'email' => 'teknisi@wifiapp.test',
-            'password' => Hash::make('teknisi123'),
-            'role' => 'teknisi',
-        ]);
+        User::firstOrCreate(
+            ['username' => 'teknisi'],
+            [
+                'name' => 'Teknisi',
+                'password' => Hash::make('1234'),
+                'role' => 'teknisi'
+            ]
+        );
     }
 }
