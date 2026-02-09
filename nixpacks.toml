@@ -30,8 +30,4 @@ cmds = [
 # START PHASE (AMAN BUAT DB)
 # ===============================
 [start]
-cmd = """
-php artisan migrate --force &&
-php artisan db:seed --force &&
-php -S 0.0.0.0:$PORT -t public
-"""
+cmd = "php artisan migrate --force && php artisan db:seed --force && php -S 0.0.0.0:$PORT -t public"
