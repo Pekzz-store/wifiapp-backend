@@ -26,9 +26,6 @@ cmds = [
   "php artisan config:clear",
   "php artisan cache:clear",
 
-  # 🔥 MIGRATE DATABASE
-  "php artisan migrate --force",
-
   # Optional biar cepat
   "php artisan config:cache"
 ]
@@ -37,4 +34,4 @@ cmds = [
 # START COMMAND
 # ===============================
 [start]
-cmd = "php -S 0.0.0.0:$PORT -t public"
+cmd = "php artisan migrate --force && php -S 0.0.0.0:$PORT -t public"
